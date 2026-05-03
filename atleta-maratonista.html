@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucas Ferreira — Maratonista</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #080808;
+      --asphalt:  #111111;
+      --dark:     #1A1A1A;
+      --mid:      #2C2C2C;
+      --orange:   #E8480A;
+      --ember:    #FF6030;
+      --gold:     #C9A84C;
+      --cream:    #F2EBD9;
+      --muted:    #8A7A6A;
+      --white:    #FAF8F4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Cormorant Garant', Georgia, serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CUSTOM CURSOR ─── */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--orange);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .15s, height .15s, background .15s;
+      mix-blend-mode: screen;
+    }
+    .cursor.big { width: 40px; height: 40px; background: var(--ember); opacity: .4; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: linear-gradient(to bottom, rgba(8,8,8,.9), transparent);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; letter-spacing: .12em;
+      color: var(--white);
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .85rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--muted);
+      text-decoration: none;
+      transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; height: 100vh;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .hero-track {
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent, transparent 48px,
+          rgba(232,72,10,.06) 48px, rgba(232,72,10,.06) 50px
+        );
+    }
+
+    .hero-gradient {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(232,72,10,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 10% 80%, rgba(201,168,76,.08) 0%, transparent 60%);
+    }
+
+    .hero-line {
+      position: absolute;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--orange), transparent);
+      opacity: .5;
+      animation: scanline 4s ease-in-out infinite;
+    }
+    .hero-line:nth-child(1) { left: 20%; animation-delay: 0s; }
+    .hero-line:nth-child(2) { left: 50%; animation-delay: 1.4s; opacity: .25; }
+    .hero-line:nth-child(3) { left: 80%; animation-delay: 2.8s; opacity: .15; }
+
+    @keyframes scanline {
+      0%, 100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      30%, 70% { opacity: .5; transform: scaleY(1); }
+    }
+
+    .hero-km {
+      position: absolute; top: 12%; right: 4%;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(10rem, 22vw, 22rem);
+      line-height: .85;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232,72,10,.15);
+      pointer-events: none;
+      user-select: none;
+      animation: fadeUp 1.2s ease both .2s;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 3rem 5rem;
+      animation: fadeUp 1s ease both .4s;
+    }
+
+    .hero-overline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .8rem; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 1rem;
+    }
+
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 14vw, 14rem);
+      line-height: .88;
+      color: var(--white);
+      letter-spacing: .02em;
+    }
+    .hero-name .accent { color: var(--orange); }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garant', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+      color: var(--muted);
+      margin-top: 1.5rem;
+      max-width: 520px;
+      line-height: 1.5;
+    }
+
+    .hero-stats {
+      display: flex; gap: 3rem;
+      margin-top: 3rem;
+    }
+    .hero-stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem; color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .78rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .6rem;
+      z-index: 2;
+      animation: bob 2s ease-in-out infinite;
+    }
+    .hero-scroll span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .7rem; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--orange), transparent);
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 8rem 3rem; }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .78rem; letter-spacing: .4em;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: .95; color: var(--white);
+      letter-spacing: .02em;
+    }
+    .divider {
+      width: 60px; height: 3px;
+      background: var(--orange); margin: 2rem 0;
+    }
+
+    /* ─── PERSONAL ─── */
+    #pessoal {
+      background: var(--asphalt);
+      position: relative; overflow: hidden;
+    }
+    #pessoal::before {
+      content: 'LIFE';
+      position: absolute; right: -2rem; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20rem; letter-spacing: .05em;
+      color: transparent; -webkit-text-stroke: 1px rgba(242,235,217,.04);
+      pointer-events: none;
+    }
+    .pessoal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1100px;
+    }
+    .pessoal-photo {
+      position: relative;
+    }
+    .photo-frame {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--mid);
+      position: relative; overflow: hidden;
+    }
+    .photo-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(232,72,10,.2), transparent 60%);
+    }
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      color: var(--muted); letter-spacing: .1em;
+      font-size: .9rem;
+    }
+    .photo-placeholder svg { opacity: .3; }
+    .photo-tag {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--orange);
+      padding: .8rem 1.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: .06em;
+      color: var(--white);
+    }
+    .pessoal-text { padding-top: 1rem; }
+    .pessoal-text p {
+      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+      line-height: 1.8; color: rgba(242,235,217,.75);
+      margin-bottom: 1.5rem;
+    }
+    .bio-chips {
+      display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem;
+    }
+    .chip {
+      border: 1px solid rgba(232,72,10,.4);
+      padding: .4rem 1.1rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .82rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    /* ─── ACADEMIC ─── */
+    #academico {
+      background: var(--black);
+      position: relative;
+    }
+    .academico-inner { max-width: 1100px; }
+    .academic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 5rem; margin-top: 4rem;
+    }
+    .academic-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+    .academic-card {
+      border-left: 3px solid var(--orange);
+      padding: 1.5rem 2rem;
+      background: var(--asphalt);
+      position: relative; overflow: hidden;
+      transition: transform .3s;
+    }
+    .academic-card:hover { transform: translateX(6px); }
+    .academic-card::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 40%; height: 100%;
+      background: linear-gradient(to left, rgba(232,72,10,.05), transparent);
+    }
+    .card-year {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; color: var(--orange); letter-spacing: .08em;
+    }
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem; font-weight: 600; color: var(--white);
+      margin: .3rem 0;
+    }
+    .card-inst {
+      font-size: .95rem; color: var(--muted); font-style: italic;
+    }
+    .academic-text p {
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      line-height: 1.85; color: rgba(242,235,217,.7);
+      margin-bottom: 1.5rem;
+    }
+    .academic-highlight {
+      background: var(--asphalt);
+      border: 1px solid rgba(201,168,76,.2);
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .academic-highlight blockquote {
+      font-size: 1.35rem; font-style: italic;
+      color: var(--gold); line-height: 1.6;
+    }
+
+    /* ─── PROVAS E TITULOS ─── */
+    #provas {
+      background: var(--asphalt);
+      position: relative; overflow: hidden;
+    }
+    #provas::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--orange), transparent);
+    }
+    .provas-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; max-width: 1100px;
+      margin-bottom: 4rem;
+    }
+    .provas-count {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem; color: var(--orange);
+      line-height: 1;
+    }
+    .provas-count small {
+      display: block; font-size: 1rem;
+      color: var(--muted); letter-spacing: .2em;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+    }
+
+    .provas-table { max-width: 1100px; width: 100%; }
+    .provas-table table {
+      width: 100%; border-collapse: collapse;
+    }
+    .provas-table thead tr {
+      border-bottom: 1px solid rgba(232,72,10,.3);
+    }
+    .provas-table th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .78rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--orange); padding: .8rem 1.5rem;
+      text-align: left; font-weight: 400;
+    }
+    .provas-table tbody tr {
+      border-bottom: 1px solid rgba(242,235,217,.06);
+      transition: background .2s;
+    }
+    .provas-table tbody tr:hover {
+      background: rgba(232,72,10,.05);
+    }
+    .provas-table td {
+      padding: 1.3rem 1.5rem;
+      font-size: 1rem; color: rgba(242,235,217,.8);
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: .04em;
+    }
+    .provas-table td:first-child { color: var(--gold); font-size: 1.15rem; font-weight: 600; }
+    .provas-table td:last-child { color: var(--orange); font-weight: 600; }
+    .medal {
+      display: inline-block; width: 24px; height: 24px;
+      border-radius: 50%; font-size: .75rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+    }
+    .gold-medal { background: #C9A84C; color: var(--black); }
+    .silver-medal { background: #9E9E9E; color: var(--black); }
+    .bronze-medal { background: #CD7F32; color: var(--black); }
+
+    /* ─── FOTOS ─── */
+    #fotos {
+      background: var(--black);
+      padding-bottom: 6rem;
+    }
+    .fotos-header { max-width: 1100px; margin-bottom: 3rem; }
+    .fotos-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 260px 260px;
+      gap: 8px;
+      max-width: 1100px;
+    }
+    .foto-item {
+      background: var(--mid);
+      overflow: hidden; position: relative;
+      cursor: pointer;
+    }
+    .foto-item:first-child { grid-column: 1 / 3; grid-row: 1 / 3; }
+    .foto-item:nth-child(4) { grid-column: 3 / 5; }
+    .foto-item .foto-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: .5rem;
+      position: relative;
+    }
+    .foto-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,.7), transparent 50%);
+      opacity: 0; transition: opacity .35s;
+    }
+    .foto-item:hover::after { opacity: 1; }
+    .foto-caption {
+      position: absolute; bottom: 1rem; left: 1.5rem;
+      z-index: 2; opacity: 0;
+      transform: translateY(8px); transition: .35s;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem; letter-spacing: .1em;
+      color: var(--white);
+    }
+    .foto-item:hover .foto-caption { opacity: 1; transform: none; }
+    .foto-overlay-icon {
+      font-size: 2rem; color: rgba(255,255,255,.15);
+    }
+    .foto-overlay-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .75rem; letter-spacing: .25em;
+      text-transform: uppercase; color: rgba(255,255,255,.2);
+    }
+    /* subtle color tints per photo */
+    .foto-item:nth-child(1) .foto-inner { background: linear-gradient(135deg, #1a1008, #2a1a0a); }
+    .foto-item:nth-child(2) .foto-inner { background: linear-gradient(135deg, #0d1318, #1a2228); }
+    .foto-item:nth-child(3) .foto-inner { background: linear-gradient(135deg, #1a0d0a, #2a1412); }
+    .foto-item:nth-child(4) .foto-inner { background: linear-gradient(135deg, #121208, #1e1e10); }
+    .foto-item:nth-child(5) .foto-inner { background: linear-gradient(135deg, #0d1008, #151a10); }
+    .foto-item:nth-child(6) .foto-inner { background: linear-gradient(135deg, #180d18, #221422); }
+
+    /* ─── MELHORES MARCAS ─── */
+    #marcas {
+      background: var(--asphalt);
+      position: relative; overflow: hidden;
+    }
+    .marcas-bg-text {
+      position: absolute; bottom: -2rem; left: -1rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18rem; color: transparent;
+      -webkit-text-stroke: 1px rgba(232,72,10,.06);
+      pointer-events: none; user-select: none;
+      white-space: nowrap; line-height: 1;
+    }
+    .marcas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px; max-width: 1100px;
+      margin-top: 4rem;
+    }
+    .marca-card {
+      background: var(--dark);
+      padding: 3rem 2.5rem;
+      position: relative; overflow: hidden;
+      transition: background .3s;
+    }
+    .marca-card:hover { background: #1e1e1e; }
+    .marca-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--orange);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .marca-card:hover::before { transform: scaleX(1); }
+    .marca-event {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .8rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1rem;
+    }
+    .marca-time {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+      color: var(--white); line-height: 1;
+      letter-spacing: .03em;
+    }
+    .marca-time .highlight { color: var(--orange); }
+    .marca-meta {
+      display: flex; gap: 2rem; margin-top: 1.5rem;
+    }
+    .marca-meta-item { }
+    .marca-meta-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; color: var(--gold);
+    }
+    .marca-meta-key {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .72rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .pb-badge {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: var(--orange);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: .9rem; letter-spacing: .1em;
+      color: var(--white); padding: .25rem .7rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(232,72,10,.2);
+      padding: 4rem 3rem 3rem;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem; letter-spacing: .1em; color: var(--white);
+    }
+    .footer-logo span { color: var(--orange); }
+    .footer-copy {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .78rem; letter-spacing: .2em;
+      color: var(--muted); text-transform: uppercase;
+    }
+    .footer-socials { display: flex; gap: 1.5rem; }
+    .footer-socials a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .8rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color .25s;
+    }
+    .footer-socials a:hover { color: var(--orange); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: .15s; }
+    .reveal-delay-2 { transition-delay: .3s; }
+    .reveal-delay-3 { transition-delay: .45s; }
+
+    /* ─── PROGRESS BARS ─── */
+    .marcas-progress { max-width: 1100px; margin-top: 4rem; }
+    .progress-item { margin-bottom: 2rem; }
+    .progress-label {
+      display: flex; justify-content: space-between;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: .85rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--cream); margin-bottom: .5rem;
+    }
+    .progress-label span { color: var(--gold); }
+    .progress-track {
+      width: 100%; height: 3px; background: rgba(255,255,255,.08);
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%; background: linear-gradient(to right, var(--orange), var(--gold));
+      width: 0; transition: width 1.4s cubic-bezier(.16,1,.3,1);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .pessoal-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .academic-grid { grid-template-columns: 1fr; }
+      .marcas-grid { grid-template-columns: 1fr; }
+      .fotos-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .foto-item:first-child { grid-column: 1 / 3; aspect-ratio: 16/9; }
+      .foto-item:nth-child(4) { grid-column: 1 / 3; }
+      .hero-content { padding: 0 1.5rem 4rem; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+      .provas-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      footer { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">LUCAS<span>.</span>FERREIRA</div>
+    <ul class="nav-links">
+      <li><a href="#pessoal">Pessoal</a></li>
+      <li><a href="#academico">Acadêmico</a></li>
+      <li><a href="#provas">Provas</a></li>
+      <li><a href="#fotos">Fotos</a></li>
+      <li><a href="#marcas">Marcas</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-track"></div>
+    <div class="hero-gradient"></div>
+    <div class="hero-line"></div>
+    <div class="hero-line"></div>
+    <div class="hero-line"></div>
+    <div class="hero-km">42</div>
+
+    <div class="hero-content">
+      <p class="hero-overline">&#9632; Atleta de Corrida de Rua · São Paulo, Brasil</p>
+      <h1 class="hero-name">
+        LUCAS<br><span class="accent">FERREIRA</span>
+      </h1>
+      <p class="hero-tagline">
+        Cada quilômetro é uma escolha.<br>
+        Cada largada, um recomeço.
+      </p>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-num">47</div>
+          <div class="hero-stat-label">Provas Completadas</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">12</div>
+          <div class="hero-stat-label">Títulos & Pódios</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">2:41</div>
+          <div class="hero-stat-label">Melhor Maratona</div>
+        </div>
+        <div>
+          <div class="hero-stat-num">8+</div>
+          <div class="hero-stat-label">Anos de Carreira</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- PESSOAL -->
+  <section id="pessoal">
+    <div class="pessoal-grid">
+      <div class="pessoal-photo reveal">
+        <div class="photo-frame">
+          <div class="photo-placeholder">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="20" r="10" stroke="#F2EBD9" stroke-width="1.5"/>
+              <path d="M10 58c0-12.15 9.85-22 22-22s22 9.85 22 22" stroke="#F2EBD9" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>Foto do Atleta</span>
+          </div>
+        </div>
+        <div class="photo-tag">SP · 1990</div>
+      </div>
+      <div class="pessoal-text">
+        <p class="section-label reveal">01 — Vida Pessoal</p>
+        <h2 class="section-title reveal">QUEM<br>SOU EU</h2>
+        <div class="divider reveal"></div>
+        <p class="reveal">
+          Natural de São Paulo, Lucas Ferreira cresceu nas ruas da capital paulista e encontrou
+          na corrida muito mais do que um esporte — encontrou uma filosofia de vida.
+          Desde criança fascinado por longas distâncias, transformou a calçada da cidade
+          em sua primeira pista de treinamento.
+        </p>
+        <p class="reveal reveal-delay-1">
+          Casado com Ana Paula e pai de dois filhos, Lucas equilibra a intensidade dos
+          treinos com a leveza do convívio familiar. Nas horas vagas, cultiva leituras
+          sobre nutrição esportiva e budismo zen — duas práticas que, segundo ele,
+          ensinam o mesmo: estar presente no momento.
+        </p>
+        <p class="reveal reveal-delay-2">
+          Hoje com 34 anos, comanda o grupo de corrida <em>Asfalto Vivo</em> no Parque
+          Ibirapuera, reunindo semanalmente mais de 200 corredores de todos os níveis
+          numa comunidade que celebra cada passo dado.
+        </p>
+        <div class="bio-chips reveal reveal-delay-3">
+          <span class="chip">São Paulo, SP</span>
+          <span class="chip">34 Anos</span>
+          <span class="chip">Asfalto Vivo</span>
+          <span class="chip">Triatlo & Ultra</span>
+          <span class="chip">Nutrição Esportiva</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACADÊMICO -->
+  <section id="academico">
+    <div class="academico-inner">
+      <p class="section-label reveal">02 — Formação</p>
+      <h2 class="section-title reveal">VIDA<br>ACADÊMICA</h2>
+      <div class="divider reveal"></div>
+      <div class="academic-grid">
+        <div class="academic-cards">
+          <div class="academic-card reveal">
+            <div class="card-year">2024</div>
+            <div class="card-title">MBA em Gestão do Esporte</div>
+            <div class="card-inst">FGV São Paulo</div>
+          </div>
+          <div class="academic-card reveal reveal-delay-1">
+            <div class="card-year">2018</div>
+            <div class="card-title">Especialização em Fisiologia do Exercício</div>
+            <div class="card-inst">UNIFESP — Universidade Federal de São Paulo</div>
+          </div>
+          <div class="academic-card reveal reveal-delay-2">
+            <div class="card-year">2015</div>
+            <div class="card-title">Bacharelado em Educação Física</div>
+            <div class="card-inst">USP — Universidade de São Paulo</div>
+          </div>
+          <div class="academic-card reveal reveal-delay-3">
+            <div class="card-year">2022</div>
+            <div class="card-title">Certificação Internacional — IAAF Athletics Coach</div>
+            <div class="card-inst">World Athletics / Nível II</div>
+          </div>
+        </div>
+        <div class="academic-text">
+          <p class="reveal">
+            A formação acadêmica de Lucas sempre caminhou lado a lado com a pista.
+            Ingressou na Educação Física motivado por entender cientificamente o que
+            seu corpo sentia durante as corridas longas — e nunca mais parou de estudar.
+          </p>
+          <p class="reveal reveal-delay-1">
+            Durante a especialização em Fisiologia do Exercício na UNIFESP, desenvolveu
+            pesquisa sobre <em>economia de corrida em atletas amadores de maratona</em>,
+            publicada em 2019 no Brazilian Journal of Sports Medicine.
+          </p>
+          <p class="reveal reveal-delay-2">
+            A certificação da World Athletics consolidou sua atuação como treinador,
+            permitindo desenvolver metodologias próprias de periodização que já
+            levaram mais de 40 atletas ao sub-4h na maratona.
+          </p>
+          <div class="academic-highlight reveal reveal-delay-3">
+            <blockquote>
+              "A ciência não tira a magia da corrida. Ela nos diz por que a magia acontece."
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROVAS E TÍTULOS -->
+  <section id="provas">
+    <div class="provas-header reveal">
+      <div>
+        <p class="section-label">03 — Palmarés</p>
+        <h2 class="section-title">PROVAS &<br>TÍTULOS</h2>
+      </div>
+      <div class="provas-count">
+        47<small>Provas Oficiais</small>
+      </div>
+    </div>
+
+    <div class="provas-table reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Prova</th>
+            <th>Distância</th>
+            <th>Local</th>
+            <th>Ano</th>
+            <th>Colocação</th>
+            <th>Tempo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Maratona de São Paulo</td>
+            <td>42,195 km</td>
+            <td>São Paulo, SP</td>
+            <td>2024</td>
+            <td><span class="medal gold-medal">1°</span></td>
+            <td>2h41m12s</td>
+          </tr>
+          <tr>
+            <td>Maratona do Rio de Janeiro</td>
+            <td>42,195 km</td>
+            <td>Rio de Janeiro, RJ</td>
+            <td>2023</td>
+            <td><span class="medal silver-medal">2°</span></td>
+            <td>2h43m58s</td>
+          </tr>
+          <tr>
+            <td>Buenos Aires Marathon</td>
+            <td>42,195 km</td>
+            <td>Buenos Aires, ARG</td>
+            <td>2023</td>
+            <td><span class="medal gold-medal">1°</span></td>
+            <td>2h45m30s</td>
+          </tr>
+          <tr>
+            <td>Circuito das Estações — Inverno</td>
+            <td>21 km</td>
+            <td>São Paulo, SP</td>
+            <td>2024</td>
+            <td><span class="medal bronze-medal">3°</span></td>
+            <td>1h10m44s</td>
+          </tr>
+          <tr>
+            <td>Volta da Pampulha</td>
+            <td>18 km</td>
+            <td>Belo Horizonte, MG</td>
+            <td>2022</td>
+            <td><span class="medal gold-medal">1°</span></td>
+            <td>1h02m15s</td>
+          </tr>
+          <tr>
+            <td>Maratona de Berlim</td>
+            <td>42,195 km</td>
+            <td>Berlim, ALE</td>
+            <td>2022</td>
+            <td>38°</td>
+            <td>2h44m02s</td>
+          </tr>
+          <tr>
+            <td>São Silvestre Internacional</td>
+            <td>15 km</td>
+            <td>São Paulo, SP</td>
+            <td>2021</td>
+            <td><span class="medal silver-medal">2°</span></td>
+            <td>47m28s</td>
+          </tr>
+          <tr>
+            <td>Ultra Trail Mantiqueira</td>
+            <td>65 km</td>
+            <td>Gonçalves, MG</td>
+            <td>2021</td>
+            <td><span class="medal gold-medal">1°</span></td>
+            <td>7h14m50s</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FOTOS -->
+  <section id="fotos">
+    <div class="fotos-header">
+      <p class="section-label reveal">04 — Galeria</p>
+      <h2 class="section-title reveal">MOMENTOS<br>NA PISTA</h2>
+      <div class="divider reveal"></div>
+    </div>
+    <div class="fotos-grid">
+      <div class="foto-item reveal">
+        <div class="foto-inner">
+          <div class="foto-overlay-icon">◈</div>
+          <div class="foto-overlay-label">Largada · Maratona SP 2024</div>
+        </div>
+        <div class="foto-caption">Maratona SP · Largada 2024</div>
+      </div>
+      <div class="foto-item reveal reveal-delay-1">
+        <div class="foto-inner">
+          <div class="foto-overlay-icon">◈</div>
+          <div class="foto-overlay-label">Treino · Ibirapuera</div>
+        </div>
+        <div class="foto-caption">Treino Ibirapuera</div>
+      </div>
+      <div class="foto-item reveal reveal-delay-2">
+        <div class="foto-inner">
+          <div class="foto-overlay-icon">◈</div>
+          <div class="foto-overlay-label">Pódio · Buenos Aires</div>
+        </div>
+        <div class="foto-caption">Pódio Buenos Aires 2023</div>
+      </div>
+      <div class="foto-item reveal">
+        <div class="foto-inner">
+          <div class="foto-overlay-icon">◈</div>
+          <div class="foto-overlay-label">Ultra Trail · Mantiqueira</div>
+        </div>
+        <div class="foto-caption">Ultra Trail Mantiqueira 2021</div>
+      </div>
+      <div class="foto-item reveal reveal-delay-1">
+        <div class="foto-inner">
+          <div class="foto-overlay-icon">◈</div>
+          <div class="foto-overlay-label">Grupo Asfalto Vivo</div>
+        </div>
+        <div class="foto-caption">Grupo Asfalto Vivo</div>
+      </div>
+      <div class="foto-item reveal reveal-delay-2">
+        <div class="foto-inner">
+          <div class="foto-overlay-icon">◈</div>
+          <div class="foto-overlay-label">Berlin Marathon 2022</div>
+        </div>
+        <div class="foto-caption">Berlin Marathon 2022</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MELHORES MARCAS -->
+  <section id="marcas">
+    <div class="marcas-bg-text">PR</div>
+    <p class="section-label reveal">05 — Performance</p>
+    <h2 class="section-title reveal">MELHORES<br>MARCAS</h2>
+    <div class="divider reveal"></div>
+
+    <div class="marcas-grid">
+      <div class="marca-card reveal">
+        <div class="pb-badge">RP</div>
+        <div class="marca-event">Maratona (42,195 km)</div>
+        <div class="marca-time"><span class="highlight">2:41</span>:12</div>
+        <div class="marca-meta">
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">3:49</div>
+            <div class="marca-meta-key">min/km</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">2024</div>
+            <div class="marca-meta-key">Ano</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">SP</div>
+            <div class="marca-meta-key">Cidade</div>
+          </div>
+        </div>
+      </div>
+      <div class="marca-card reveal reveal-delay-1">
+        <div class="marca-event">Meia Maratona (21,097 km)</div>
+        <div class="marca-time"><span class="highlight">1:10</span>:44</div>
+        <div class="marca-meta">
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">3:21</div>
+            <div class="marca-meta-key">min/km</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">2024</div>
+            <div class="marca-meta-key">Ano</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">SP</div>
+            <div class="marca-meta-key">Cidade</div>
+          </div>
+        </div>
+      </div>
+      <div class="marca-card reveal reveal-delay-2">
+        <div class="marca-event">10 km</div>
+        <div class="marca-time"><span class="highlight">30</span>:58</div>
+        <div class="marca-meta">
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">3:06</div>
+            <div class="marca-meta-key">min/km</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">2023</div>
+            <div class="marca-meta-key">Ano</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">RJ</div>
+            <div class="marca-meta-key">Cidade</div>
+          </div>
+        </div>
+      </div>
+      <div class="marca-card reveal">
+        <div class="marca-event">5 km</div>
+        <div class="marca-time"><span class="highlight">14</span>:52</div>
+        <div class="marca-meta">
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">2:58</div>
+            <div class="marca-meta-key">min/km</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">2022</div>
+            <div class="marca-meta-key">Ano</div>
+          </div>
+        </div>
+      </div>
+      <div class="marca-card reveal reveal-delay-1">
+        <div class="marca-event">São Silvestre (15 km)</div>
+        <div class="marca-time"><span class="highlight">47</span>:28</div>
+        <div class="marca-meta">
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">3:10</div>
+            <div class="marca-meta-key">min/km</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">2021</div>
+            <div class="marca-meta-key">Ano</div>
+          </div>
+        </div>
+      </div>
+      <div class="marca-card reveal reveal-delay-2">
+        <div class="marca-event">Ultra Trail (65 km)</div>
+        <div class="marca-time"><span class="highlight">7:14</span>:50</div>
+        <div class="marca-meta">
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">6:42</div>
+            <div class="marca-meta-key">min/km</div>
+          </div>
+          <div class="marca-meta-item">
+            <div class="marca-meta-val">2021</div>
+            <div class="marca-meta-key">Ano</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress comparison bars -->
+    <div class="marcas-progress reveal" style="margin-top: 5rem;">
+      <p class="section-label" style="margin-bottom: 2.5rem;">Comparativo com referências mundiais</p>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Maratona — Lucas: 2h41 &nbsp;&nbsp;|&nbsp;&nbsp; Ref. Elite: 2h01 (Kelvin Kiptum)</span>
+          <span>89%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" data-width="89"></div>
+        </div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Meia Maratona — Lucas: 1h10 &nbsp;&nbsp;|&nbsp;&nbsp; Ref. Elite: 57'31 (Jacob Kiplimo)</span>
+          <span>82%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" data-width="82"></div>
+        </div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>10 km — Lucas: 30'58 &nbsp;&nbsp;|&nbsp;&nbsp; Ref. Elite: 26'06 (Rhonex Kipruto)</span>
+          <span>84%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" data-width="84"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-logo">LUCAS<span>.</span>FERREIRA</div>
+      <div class="footer-copy" style="margin-top:.6rem;">© 2025 · Atleta de Corrida de Rua</div>
+    </div>
+    <div class="footer-socials">
+      <a href="#">Instagram</a>
+      <a href="#">Strava</a>
+      <a href="#">Contato</a>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .foto-item, .marca-card, .academic-card').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+
+    // Progress bars
+    const progObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.progress-fill').forEach(fill => {
+            const w = fill.dataset.width;
+            fill.style.width = w + '%';
+          });
+          progObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.marcas-progress').forEach(el => progObserver.observe(el));
+
+    // Smooth nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--orange)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
